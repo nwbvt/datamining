@@ -10,9 +10,16 @@
    (> epsilon (Math/abs (- (double val1) (double val2))))))
 
 (deftest pagerank-test
-  (testing "Page rank"
+  (testing "Basic page rank"
     (let [g {:y [:y :a] :a [:y :m] :m [:a]}
           results (page-rank g)]
       (is (near 2/5 (results :y)))
       (is (near 2/5 (results :a)))
-      (is (near 1/5 (results :m))))))
+      (is (near 1/5 (results :m)))))
+  #_(testing "Page Rank with spider traps"
+    (let [g {:a [:b] :b [:a] :c [:a]}]
+      false ;add a test here once it won't go in infinite loop
+      ))
+  #_(testing "Page Rank with dead end"
+    (let [g {:a [:b] :b []}]
+      (is (= 1 (apply + (vals (page-rank g))) )))))
