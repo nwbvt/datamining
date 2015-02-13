@@ -1,11 +1,11 @@
 (ns datamining.core)
 
-(defn edges
+(defn- edges
   "Gets the edges in a graph"
   [graph]
   (mapcat (fn [[start ends]] (map #(vec [start %]) ends)) graph))
 
-(defn rev-graph
+(defn- rev-graph
   "Reverses the graph"
   [graph]
   (let [edge-list (edges graph)]
@@ -16,7 +16,7 @@
                         (conj (rev-graph out) in) [in])]
           (recur (assoc rev-graph out in-list) (rest left)))))))
 
-(defn map-dist
+(defn- map-dist
   "'distance' between two maps
    assumes same keyset"
   [map1 map2]
