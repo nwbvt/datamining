@@ -41,5 +41,5 @@
 
 (defn page-rank
   "runs pagerank against a graph"
-  [graph & {:keys [epsilon beta] :or {epsilon 0.01 beta 0.85}}]
+  [graph & {:keys [epsilon beta] :or {epsilon 0.01 beta 17/20}}]
   (power-iteration graph epsilon beta))

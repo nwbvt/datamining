@@ -13,13 +13,13 @@
   (testing "Basic page rank"
     (let [g {:y [:y :a] :a [:y :m] :m [:a]}
           results (page-rank g :beta 1)]
-      (is (near 1 (apply + (vals (page-rank g)))) 0.00001)
+      (is (= 1 (apply + (vals results))))
       (is (near 2/5 (results :y)))
       (is (near 2/5 (results :a)))
       (is (near 1/5 (results :m)))))
   (testing "Page Rank with spider traps"
     (let [g {:a [:b] :b [:a] :c [:a]}]
-      (is (near 1 (apply + (vals (page-rank g)))) 0.00001)))
+      (is (= 1 (apply + (vals (page-rank g)))))))
   (testing "Page Rank with dead end"
     (let [g {:a [:b] :b []}]
-      (is (near 1 (apply + (vals (page-rank g)))) 0.00001))))
+      (is (= 1 (apply + (vals (page-rank g))))))))
