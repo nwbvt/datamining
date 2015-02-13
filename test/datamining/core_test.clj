@@ -12,14 +12,14 @@
 (deftest pagerank-test
   (testing "Basic page rank"
     (let [g {:y [:y :a] :a [:y :m] :m [:a]}
-          results (page-rank g)]
+          results (page-rank g :beta 1)]
+      (is (near 1 (apply + (vals (page-rank g)))) 0.00001)
       (is (near 2/5 (results :y)))
       (is (near 2/5 (results :a)))
       (is (near 1/5 (results :m)))))
-  #_(testing "Page Rank with spider traps"
+  (testing "Page Rank with spider traps"
     (let [g {:a [:b] :b [:a] :c [:a]}]
-      false ;add a test here once it won't go in infinite loop
-      ))
+      (is (near 1 (apply + (vals (page-rank g)))) 0.00001)))
   #_(testing "Page Rank with dead end"
     (let [g {:a [:b] :b []}]
-      (is (= 1 (apply + (vals (page-rank g))) )))))
+      (is (near 1 (apply + (vals (page-rank g)))) 0.00001))))

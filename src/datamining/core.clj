@@ -25,18 +25,19 @@
 
 (defn- power-iteration
   "Runs power iteration on a graph"
-  [graph epsilon]
+  [graph epsilon beta]
   (let [rev (rev-graph graph)
         nodes (keys graph)]
     (loop [prior (zipmap nodes (repeat (/ 1 (count nodes))))]
       (let [scores (zipmap nodes
                            (for [node nodes]
-                             (apply + (map #(/ (prior %) (count (graph %))) (rev node)))))]
+                             (+ (* beta (apply + (map #(/ (prior %) (count (graph %))) (rev node))))
+                                (* (- 1 beta) (/ 1 (count nodes))))))]
         (if (< epsilon (map-dist prior scores))
           (recur scores)
           scores))))) 
 
 (defn page-rank
   "runs pagerank against a graph"
-  [graph]
-  (power-iteration graph 0.01))
+  [graph & {:keys [epsilon beta] :or {epsilon 0.01 beta 0.85}}]
+  (power-iteration graph epsilon beta))
