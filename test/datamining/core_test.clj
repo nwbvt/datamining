@@ -20,6 +20,6 @@
   (testing "Page Rank with spider traps"
     (let [g {:a [:b] :b [:a] :c [:a]}]
       (is (near 1 (apply + (vals (page-rank g)))) 0.00001)))
-  #_(testing "Page Rank with dead end"
+  (testing "Page Rank with dead end"
     (let [g {:a [:b] :b []}]
       (is (near 1 (apply + (vals (page-rank g)))) 0.00001))))

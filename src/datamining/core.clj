@@ -27,11 +27,13 @@
   "Runs power iteration on a graph"
   [graph epsilon beta]
   (let [rev (rev-graph graph)
-        nodes (keys graph)]
+        nodes (keys graph)
+        dead-ends (filter #(empty? (graph %)) (keys graph))]
     (loop [prior (zipmap nodes (repeat (/ 1 (count nodes))))]
       (let [scores (zipmap nodes
                            (for [node nodes]
                              (+ (* beta (apply + (map #(/ (prior %) (count (graph %))) (rev node))))
+                                (* beta (apply + (map #(/ (prior %) (count (keys graph))) dead-ends)))
                                 (* (- 1 beta) (/ 1 (count nodes))))))]
         (if (< epsilon (map-dist prior scores))
           (recur scores)
