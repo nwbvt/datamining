@@ -43,3 +43,8 @@
   "runs pagerank against a graph"
   [graph & {:keys [epsilon beta] :or {epsilon 0.01 beta 17/20}}]
   (power-iteration graph epsilon beta))
+
+(defn shingle
+  "Shingles a document into a set of k-grams"
+  [k doc]
+  (set (map (partial take k) (take-while #(<= k (count %)) (iterate rest doc)))))

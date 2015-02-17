@@ -23,3 +23,7 @@
   (testing "Page Rank with dead end"
     (let [g {:a [:b] :b []}]
       (is (= 1 (apply + (vals (page-rank g))))))))
+
+(deftest similarity-test
+  (testing "Shingling"
+    (is (= (set (map seq ["ab" "bc" "ca"])) (shingle 2 "abcab")))))
