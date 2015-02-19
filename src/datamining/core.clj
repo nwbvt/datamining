@@ -48,3 +48,12 @@
   "Shingles a document into a set of k-grams"
   [k doc]
   (set (map (partial take k) (take-while #(<= k (count %)) (iterate rest doc)))))
+
+(defn gen-hash
+  "Generate a random hash function"
+  [& {:keys [seed size] :or {seed nil size 11}}]
+  (let [rand (if (nil? seed) (java.util.Random.)
+               (java.util.Random. seed))
+        a (first (filter #(pos? (mod % size)) (repeatedly #(.nextInt rand))))
+        b (.nextInt rand)]
+    (fn [x] (mod (+ (* a x) b) size))))
